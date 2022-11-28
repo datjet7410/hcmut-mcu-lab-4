@@ -26,7 +26,7 @@ uint8_t SCH_Add_Task(
 		SCH_tasks_G[current_task_index].Period = PERIOD;
 		SCH_tasks_G[current_task_index].RunMe = 0;
 
-		current_task_index++;
+		return current_task_index++;
 	}
 
 	return current_task_index;

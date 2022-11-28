@@ -10,6 +10,12 @@
 
 #include "main.h"
 
-void led1test();
+void debug_led_run();
 
+void aqua_led_run();
+void orange_led_run();
+void pink_led_run();
+void yellow_led_run();
+
+void green_led_run();
 #endif /* INC_LED_DRIVER_H_ */

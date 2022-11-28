@@ -96,10 +96,19 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Add_Task(led1test, 1000 / TIMER_CYCLE, 1000 / TIMER_CYCLE);
+  SCH_Add_Task(debug_led_run, 0, 1000 / TIMER_CYCLE);
+
+  SCH_Add_Task(aqua_led_run, 5, 500 / TIMER_CYCLE);
+  SCH_Add_Task(orange_led_run, 10, 1500 / TIMER_CYCLE);
+  SCH_Add_Task(pink_led_run, 15, 2000 / TIMER_CYCLE);
+  SCH_Add_Task(yellow_led_run, 20, 2500 / TIMER_CYCLE);
+
+  // Oneshot task
+  SCH_Add_Task(green_led_run, 5000, 0);
 
   while (1)
   {
+	  SCH_Dispatch_Tasks();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -201,22 +210,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_AQUA_Pin|LED_PINK_Pin|LED_YELLOW_Pin
-                          |LED_GREEN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_AQUA_Pin|LED_ORANGE_Pin|LED_PINK_Pin
+                          |LED_YELLOW_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin LED_AQUA_Pin LED_PINK_Pin LED_YELLOW_Pin
-                           LED_GREEN_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|LED_AQUA_Pin|LED_PINK_Pin|LED_YELLOW_Pin
-                          |LED_GREEN_Pin;
+  /*Configure GPIO pins : LED_RED_Pin LED_AQUA_Pin LED_ORANGE_Pin LED_PINK_Pin
+                           LED_YELLOW_Pin LED_GREEN_Pin */
+  GPIO_InitStruct.Pin = LED_RED_Pin|LED_AQUA_Pin|LED_ORANGE_Pin|LED_PINK_Pin
+                          |LED_YELLOW_Pin|LED_GREEN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : LED_ORANGE_Pin */
-  GPIO_InitStruct.Pin = LED_ORANGE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  HAL_GPIO_Init(LED_ORANGE_GPIO_Port, &GPIO_InitStruct);
 
 }
 
