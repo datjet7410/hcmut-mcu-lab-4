@@ -103,8 +103,8 @@ int main(void)
   SCH_Add_Task(pink_led_run, 15, 2000 / TIMER_CYCLE);
   SCH_Add_Task(yellow_led_run, 20, 2500 / TIMER_CYCLE);
 
-  // Oneshot task
-  SCH_Add_Task(green_led_run, 5000, 0);
+  // One shot task
+  SCH_Add_Task(green_led_run, 5000 / TIMER_CYCLE, 0);
 
   while (1)
   {

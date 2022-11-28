@@ -9,6 +9,8 @@
 
 
 sTasks SCH_tasks_G[SCH_MAX_TASKS];
+
+/* Also the last task in queue */
 uint8_t current_task_index = 0;
 
 void SCH_Init(void){
@@ -29,7 +31,8 @@ uint8_t SCH_Add_Task(
 		return current_task_index++;
 	}
 
-	return current_task_index;
+	/* Error */
+	return 1;
 }
 
 void SCH_Update_Tasks(void){
@@ -49,6 +52,7 @@ void SCH_Dispatch_Tasks(void){
 			SCH_tasks_G[i].RunMe--;
 			(*SCH_tasks_G[i].pTask)();
 
+			/* For One shot task */
 			if(SCH_tasks_G[i].Period == 0 ){
 				SCH_Delete_Task(i);
 			}
@@ -56,7 +60,18 @@ void SCH_Dispatch_Tasks(void){
 	}
 }
 
-
 uint8_t SCH_Delete_Task(uint8_t task_index){
+	/* Shift array */
+	for(int i = task_index + 1; i < current_task_index; i++){
+		SCH_tasks_G[i - 1] = SCH_tasks_G[i];
+	}
+
+	SCH_tasks_G[current_task_index].pTask = 0x0000;
+	SCH_tasks_G[current_task_index].Delay = 0;
+	SCH_tasks_G[current_task_index].Period = 0;
+	SCH_tasks_G[current_task_index].RunMe = 0;
+
+	current_task_index--;
+
 	return 0;
 }
