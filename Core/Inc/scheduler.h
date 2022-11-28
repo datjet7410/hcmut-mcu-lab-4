@@ -11,6 +11,8 @@
 #include "stdint.h"
 
 
+#define TIMER_CYCLE 10
+
 #define SCH_MAX_TASKS 40
 
 
