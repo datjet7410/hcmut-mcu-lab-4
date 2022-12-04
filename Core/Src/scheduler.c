@@ -24,14 +24,13 @@ uint8_t SCH_Add_Task(
 		){
 	if(current_task_index < SCH_MAX_TASKS){
 		SCH_tasks_G[current_task_index].pTask = pFunction;
-		SCH_tasks_G[current_task_index].Delay = DELAY;
-		SCH_tasks_G[current_task_index].Period = PERIOD;
+		SCH_tasks_G[current_task_index].Delay = DELAY / TIMER_CYCLE;
+		SCH_tasks_G[current_task_index].Period = PERIOD / TIMER_CYCLE;
 		SCH_tasks_G[current_task_index].RunMe = 0;
 
 		return current_task_index++;
 	}
 
-	/* Error */
 	return 1;
 }
 

@@ -17,12 +17,12 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <led_tasks.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "scheduler.h"
-#include "led_driver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,12 +96,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Add_Task(debug_led_run, 0, 1000 / TIMER_CYCLE);
+  SCH_Add_Task(debug_led_run, 0, 500 );
 
-  SCH_Add_Task(aqua_led_run, 5, 500 / TIMER_CYCLE);
-  SCH_Add_Task(orange_led_run, 10, 1500 / TIMER_CYCLE);
-  SCH_Add_Task(pink_led_run, 15, 2000 / TIMER_CYCLE);
-  SCH_Add_Task(yellow_led_run, 20, 2500 / TIMER_CYCLE);
+  SCH_Add_Task(aqua_led_run, 5, 1000 / TIMER_CYCLE);
+  SCH_Add_Task(orange_led_run, 10, 2000 / TIMER_CYCLE);
+  SCH_Add_Task(pink_led_run, 15, 3000 / TIMER_CYCLE);
+  SCH_Add_Task(yellow_led_run, 20, 4000 / TIMER_CYCLE);
 
   // One shot task
   SCH_Add_Task(green_led_run, 5000 / TIMER_CYCLE, 0);

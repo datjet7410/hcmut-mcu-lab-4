@@ -5,8 +5,8 @@
  *      Author: datjet7410
  */
 
-#ifndef INC_LED_DRIVER_H_
-#define INC_LED_DRIVER_H_
+#ifndef INC_LED_TASKS_H_
+#define INC_LED_TASKS_H_
 
 #include "main.h"
 
@@ -18,4 +18,4 @@ void pink_led_run();
 void yellow_led_run();
 
 void green_led_run();
-#endif /* INC_LED_DRIVER_H_ */
+#endif /* INC_LED_TASKS_H_ */
