@@ -10,11 +10,11 @@
 
 sTasks SCH_tasks_G[SCH_MAX_TASKS];
 
-/* Last task in SCH_tasks_G */
-uint8_t last_task_index = 0;
+/* Real size of tasks' queue */
+uint8_t tasks_queue_size = 0;
 
 void SCH_Init(void){
-	last_task_index = 0;
+	tasks_queue_size = 0;
 }
 
 uint8_t SCH_Add_Task(
@@ -22,31 +22,32 @@ uint8_t SCH_Add_Task(
 		uint32_t DELAY,
 		uint32_t PERIOD
 		){
-	if(last_task_index < SCH_MAX_TASKS){
-		SCH_tasks_G[last_task_index].pTask = pFunction;
-		SCH_tasks_G[last_task_index].Delay = DELAY / TIMER_CYCLE;
-		SCH_tasks_G[last_task_index].Period = PERIOD / TIMER_CYCLE;
-		SCH_tasks_G[last_task_index].RunMe = 0;
+	if(tasks_queue_size < SCH_MAX_TASKS){
+		SCH_tasks_G[tasks_queue_size].pTask = pFunction;
+		SCH_tasks_G[tasks_queue_size].Delay = DELAY / TIMER_CYCLE;
+		SCH_tasks_G[tasks_queue_size].Period = PERIOD / TIMER_CYCLE;
+		SCH_tasks_G[tasks_queue_size].RunMe = 0;
 
-		return last_task_index++;
+		return tasks_queue_size++;
 	}
 
 	return 1;
 }
 
 void SCH_Update_Tasks(void){
-	for(int i = 0; i < last_task_index; i++){
+	for(int i = 0; i < tasks_queue_size; i++){
 		if(SCH_tasks_G[i].Delay > 0){
 			SCH_tasks_G[i].Delay--;
 		}else{
-			SCH_tasks_G[i].Delay = SCH_tasks_G[i].Period;
+			/* Period - 1 -> 0 count Period times */
+			SCH_tasks_G[i].Delay = SCH_tasks_G[i].Period - 1;
 			SCH_tasks_G[i].RunMe++;
 		}
 	}
 }
 
 void SCH_Dispatch_Tasks(void){
-	for(int i = 0; i < last_task_index; i++){
+	for(int i = 0; i < tasks_queue_size; i++){
 		if(SCH_tasks_G[i].RunMe > 0){
 			SCH_tasks_G[i].RunMe--;
 			(*SCH_tasks_G[i].pTask)();
@@ -61,16 +62,11 @@ void SCH_Dispatch_Tasks(void){
 
 uint8_t SCH_Delete_Task(uint8_t task_index){
 	/* Shift array */
-	for(int i = task_index + 1; i < last_task_index; i++){
+	for(int i = task_index + 1; i < tasks_queue_size; i++){
 		SCH_tasks_G[i - 1] = SCH_tasks_G[i];
 	}
 
-	SCH_tasks_G[last_task_index].pTask = 0x0000;
-	SCH_tasks_G[last_task_index].Delay = 0;
-	SCH_tasks_G[last_task_index].Period = 0;
-	SCH_tasks_G[last_task_index].RunMe = 0;
-
-	last_task_index--;
+	tasks_queue_size--;
 
 	return 0;
 }
