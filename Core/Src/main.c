@@ -106,7 +106,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  SCH_Add_Task(print_time_stamp, 0, 500);
+  SCH_Add_Task(print_time_stamp, 0, 100);
 
   SCH_Add_Task(debug_led_run, 30, 500 );
 
