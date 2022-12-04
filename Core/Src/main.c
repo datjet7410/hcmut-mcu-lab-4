@@ -98,13 +98,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   SCH_Add_Task(debug_led_run, 0, 500 );
 
-  SCH_Add_Task(aqua_led_run, 5, 1000 / TIMER_CYCLE);
-  SCH_Add_Task(orange_led_run, 10, 2000 / TIMER_CYCLE);
-  SCH_Add_Task(pink_led_run, 15, 3000 / TIMER_CYCLE);
-  SCH_Add_Task(yellow_led_run, 20, 4000 / TIMER_CYCLE);
+  SCH_Add_Task(aqua_led_run, 5, 1000);
+  SCH_Add_Task(orange_led_run, 10, 2000);
+  SCH_Add_Task(pink_led_run, 15, 3000);
+  SCH_Add_Task(yellow_led_run, 20, 4000);
 
   // One shot task
-  SCH_Add_Task(green_led_run, 5000 / TIMER_CYCLE, 0);
+  SCH_Add_Task(green_led_run, 5000, 0);
 
   while (1)
   {
